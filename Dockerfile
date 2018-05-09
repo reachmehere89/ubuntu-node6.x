@@ -46,3 +46,13 @@ RUN apt-get update && \
     update-alternatives --config java && \
 	whereis java && \
 	apt-get clean
+
+#Install bower, gulp, jspm, grunt, protractor
+RUN npm install -g bower
+RUN npm install -g gulp
+RUN npm install -g jspm
+RUN npm install -g grunt-cli
+RUN npm install -g grunt@0.4.4
+RUN npm install -g grunt-shell-spawn@0.3.10
+RUN npm install -g grunt-protractor-runner@3.2.0
+RUN npm install -g grunt-protractor-webdriver
