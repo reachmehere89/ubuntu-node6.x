@@ -47,6 +47,10 @@ RUN apt-get update && \
 	whereis java && \
 	apt-get clean
 
+# install xvbf
+RUN apt-get -y install xvfb
+RUN apt-get install -y  xfonts-100dpi xfonts-75dpi xfonts-cyrillic  dbus-x11
+
 #Install bower, gulp, jspm, grunt, protractor
 RUN npm install -g bower
 RUN npm install -g gulp
@@ -56,3 +60,6 @@ RUN npm install -g grunt@0.4.4
 RUN npm install -g grunt-shell-spawn@0.3.10
 RUN npm install -g grunt-protractor-runner@3.2.0
 RUN npm install -g grunt-protractor-webdriver
+
+# Run xvbf in background
+RUN Xvfb :99 -screen 0 1366x800x24 &
