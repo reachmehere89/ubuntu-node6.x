@@ -34,22 +34,23 @@ RUN mv cf /usr/local/bin
 # Install app dependencies
 
 RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && apt-get install -qy g++ gcc python nodejs && \
-  node -v && \
   npm install --quiet node-gyp -g
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - 
 RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
 RUN apt-get update && apt-get install -qy google-chrome-stable
-RUN google-chrome --version
 RUN apt-get update && \
     apt-get upgrade -y && \
     add-apt-repository ppa:openjdk-r/ppa && apt-get update && apt-get install -qy openjdk-8-jdk && \
     update-alternatives --config java && \
-	whereis java && \
 	apt-get clean
 
-# install xvbf
-RUN apt-get -y install xvfb
-RUN apt-get install -y  xfonts-100dpi xfonts-75dpi xfonts-cyrillic  dbus-x11
+# install sonar scanner
+RUN wget -q -O sonarscanner.zip https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-2.8.zip
+RUN unzip sonarscanner.zip
+RUN rm sonarscanner.zip
+
+ENV SONAR_RUNNER_HOME=/root/sonar-scanner-2.8
+ENV PATH $PATH:/root/sonar-scanner-2.8/bin
 
 #Install bower, gulp, jspm, grunt, protractor
 RUN npm install -g bower
